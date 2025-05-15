@@ -18,6 +18,6 @@ fn main() {
 
     println!(
         "El valor de {} bits es igual a {} kilobytes",
-        data_ejemplardo.value, converted
+        data_ejemplardo.value, converted.value
     );
 }

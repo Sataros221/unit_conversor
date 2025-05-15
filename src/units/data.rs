@@ -1,3 +1,13 @@
+const BIT: i32 = 1;
+const BYTE: i32 = BIT * 8;
+const KILOBYTE: i32 = BYTE * 1024;
+const MEGABYTE: i32 = KILOBYTE * 1024;
+
+pub enum ResultType {
+    Integer(i32),
+    Float(f32),
+}
+
 pub enum DataUnit {
     Bit,
     Byte,
@@ -5,20 +15,25 @@ pub enum DataUnit {
     Megabyte,
 }
 
-pub struct DataValue {
-    pub value: i32,
+pub struct Data {
     pub unit: DataUnit,
+    pub value: ResultType,
 }
 
-impl DataValue {
-    const BYTE: i32 = 8;
-
-    pub fn convert_to(&self, unit: DataUnit) -> i32 {
-        match unit {
+impl Data {
+    pub fn convert_to(&self, target_unit: DataUnit) -> Data {
+        let data_in_bytes = match self.unit {
             DataUnit::Bit => self.value,
-            DataUnit::Byte => self.value * Self::BYTE,
-            DataUnit::Kilobyte => self.value * Self::BYTE * 1024,
-            DataUnit::Megabyte => self.value * Self::BYTE * 1024 * 1024,
-        }
+            DataUnit::Byte => self.value * BYTE,
+            DataUnit::Kilobyte => self.value * KILOBYTE,
+            DataUnit::Megabyte => self.value * MEGABYTE,
+        };
+
+        return match target_unit {
+            DataUnit::Bit => data_in_bytes,
+            DataUnit::Byte => data_in_bytes / BYTE,
+            DataUnit::Kilobyte => data_in_bytes / KILOBYTE,
+            DataUnit::Megabyte => data_in_bytes / MEGABYTE,
+        };
     }
 }

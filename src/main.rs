@@ -1,4 +1,7 @@
-use units::data::{DataUnit, DataValue};
+use units::data::{
+    Data,
+    DataUnit::{Bit, Byte, Kilobyte},
+};
 
 mod units {
     pub mod data;
@@ -7,14 +10,14 @@ mod units {
 fn main() {
     println!("Hello, world!");
 
-    let data_ejemplardo = DataValue {
-        value: 10,
-        unit: DataUnit::Byte,
+    let data_ejemplardo = Data {
+        value: 10.0,
+        unit: Kilobyte,
     };
-    let converted = data_ejemplardo.convert_to(DataUnit::Bit);
+    let converted = data_ejemplardo.convert_to(Byte);
 
     println!(
-        "El valor de {} bytes es igual a {} bits",
+        "El valor de {} bits es igual a {} kilobytes",
         data_ejemplardo.value, converted
     );
 }

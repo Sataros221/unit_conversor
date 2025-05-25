@@ -110,7 +110,7 @@ fn main() {
     }
 
     println!(
-        "You made {} conversions. Thank you for using this stuff :)",
+        "You made {} conversions. Thank you for using our stuff :)",
         conversions
     );
 }

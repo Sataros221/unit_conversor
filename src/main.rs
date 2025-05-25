@@ -1,3 +1,5 @@
+use std::thread;
+
 use units::data::{self, Data, DataUnit};
 
 mod units {
@@ -8,11 +10,18 @@ fn print_conversion<T>(data: &T, converted: &T)
 where
     T: std::fmt::Debug,
 {
-    let message = format!("{:?} -> {:?}", data, converted);
-    let fill = "*".repeat(message.len() + 4);
+    //
+    // TODO: HACER ESTO GENÉRICO PARA DISTANCIA Y TEMPERATURA
+    //
+
+    let message_value = format!("{:?} -> {:?}", data, converted);
+    // let message_unit = format!("{}", data.unit, converted.unit);
+    let fill = "*".repeat(message_value.len() + 4);
     println!("{}", fill);
-    println!("* {} *", message);
+    println!("* {} *", message_value);
+    // println!("* {} *", message_unit);
     println!("{}", fill);
+    println!();
 }
 
 fn read_line(prompt: &str) -> String {
@@ -30,6 +39,8 @@ fn read_line(prompt: &str) -> String {
 }
 
 fn main() {
+    let mut conversions: i32 = 0;
+
     println!("-----* Welcome to the Data Unit Converter! *-----");
 
     loop {
@@ -91,8 +102,15 @@ fn main() {
                 break;
             }
             _ => {
-                println!("Invalid choice. Please try again.");
+                thread::sleep(std::time::Duration::from_secs(3));
+                continue;
             }
         }
+        conversions += 1;
     }
+
+    println!(
+        "You made {} conversions. Thank you for using this stuff :)",
+        conversions
+    );
 }
